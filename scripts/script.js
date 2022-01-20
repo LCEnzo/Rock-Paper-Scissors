@@ -51,7 +51,7 @@ function updateScore(playerScore, botScore) {
     pointsEl.textContent = `${Math.floor(playerScore)}/${Math.floor(botScore)}`;
 }
 
-function doRound(pick) {
+function playRound(pick) {
     if(typeof pick != 'number') {
         throw new TypeError("pick is not a number");
     }
@@ -64,16 +64,16 @@ function doRound(pick) {
 
     const botPick = getBotHand();
     
-    const winner = evalPicks(pick, botPick); 
-    if(winner == PlayerWin) {
+    const win = evalPicks(pick, botPick); 
+    if(win == PlayerWin) {
         playerScore++;
         infoPara.textContent = "You won";
     }
-    else if(winner == BotWin) {
+    else if(win == BotWin) {
         botScore++;
         infoPara.textContent = "Bot won";
     }
-    else if(winner == Tie) { 
+    else if(win == Tie) { 
         infoPara.textContent = "Tied, both picked ";
 
         if(pick == Rock) infoPara.textContent += "Rock";
@@ -87,6 +87,6 @@ function doRound(pick) {
     updateScore(playerScore, botScore);
 }
 
-rockIcon.addEventListener("click", event => doRound(Rock))
-paperIcon.addEventListener("click", event => doRound(Paper))
-scissorsIcon.addEventListener("click", event => doRound(Scissors))
+rockIcon.addEventListener("click", event => playRound(Rock))
+paperIcon.addEventListener("click", event => playRound(Paper))
+scissorsIcon.addEventListener("click", event => playRound(Scissors))
