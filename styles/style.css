@@ -34,6 +34,10 @@ main {
     flex: 0 0 auto;
 }
 
+main p {
+    font-size: 24px;
+}
+
 .choices img {
     width: 128px;
     height: 128px;

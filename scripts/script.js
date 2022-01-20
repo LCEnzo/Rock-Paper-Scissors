@@ -49,18 +49,20 @@ function evalPicks(playerPick, botPick) {
 
 function updateScore(playerScore, botScore) {
     pointsEl.textContent = `${Math.floor(playerScore)}/${Math.floor(botScore)}`;
+
+    if(playerScore == 5 || botScore == 5) {
+        infoPara.textContent = `${botScore != 5 ? "You've " : "The bot has "} won`;
+
+        removeListeners();
+    }
 }
 
-function playRound(pick) {
-    if(typeof pick != 'number') {
-        throw new TypeError("pick is not a number");
-    }
-
-    pick = Math.floor(pick);
-
-    if(pick != Rock && pick != Paper && pick != Scissors) {
-        throw new Error(`Math.floor(pick) must equal one of [Rock: ${Rock}, Paper: ${Paper}, Scissors: ${Scissors}].`);
-    }
+function playRound(event) {
+    let pick;
+    if(event.target == rockIcon) pick = Rock;
+    else if(event.target == paperIcon) pick = Paper;
+    else if(event.target == scissorsIcon) pick = Scissors;
+    else throw new Error(`Call on invalid DOM element ${event.target}.`);
 
     const botPick = getBotHand();
     
@@ -87,6 +89,19 @@ function playRound(pick) {
     updateScore(playerScore, botScore);
 }
 
-rockIcon.addEventListener("click", event => playRound(Rock))
-paperIcon.addEventListener("click", event => playRound(Paper))
-scissorsIcon.addEventListener("click", event => playRound(Scissors))
+function initialize() {
+    playerScore = 0;
+    botScore = 0;
+
+    rockIcon.addEventListener("click", playRound)
+    paperIcon.addEventListener("click", playRound)
+    scissorsIcon.addEventListener("click", playRound)
+}
+
+function removeListeners() {
+    rockIcon.removeEventListener('click', playRound);
+    paperIcon.removeEventListener('click', playRound);
+    scissorsIcon.removeEventListener('click', playRound);
+}
+
+initialize();
