@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+:root {
+    --main-font-size: 24px;
+}
+
 body {
     margin: 0px;
     height: 100vh;
@@ -32,16 +36,39 @@ main {
     width: auto;
     margin: 0 auto auto;
     flex: 0 0 auto;
+    font-family: sans-serif;
 }
 
 main p {
-    font-size: 24px;
+    font-size: var(--main-font-size);
+    margin: 1px 0px;
 }
 
 .choices img {
     width: 128px;
     height: 128px;
     margin: 12px;
+}
+
+.info-box p {
+    text-align: center;
+    font-size: 24px;
+    margin: 10px auto 30px auto;
+}
+
+.play-button-div {
+    text-align: center;
+    margin: 5px auto;
+}
+
+#play-button {
+    display: none;
+    padding: 12px 20px;
+    font-size: var(--main-font-size);
+    text-align: center;
+    background-color: #003153;
+    border-radius: 9px; 
+    margin: 5px auto;
 }
 
 footer {

@@ -3,6 +3,7 @@ const rockIcon = document.querySelector("#rock");
 const paperIcon = document.querySelector("#paper");
 const scissorsIcon = document.querySelector("#scissors");
 const infoPara = document.querySelector(".info-box p");
+const playButton = document.querySelector("#play-button");
 
 const Rock = 0;
 const Paper = 1;
@@ -47,13 +48,13 @@ function evalPicks(playerPick, botPick) {
     throw new Error(`evalPicksError, playerPick: ${playerPick}, botPick: ${botPick}`);
 }
 
-function updateScore(playerScore, botScore) {
+function updateScore(playerScore = 0, botScore = 0) {
     pointsEl.textContent = `${Math.floor(playerScore)}/${Math.floor(botScore)}`;
 
     if(playerScore == 5 || botScore == 5) {
         infoPara.textContent = `${botScore != 5 ? "You've " : "The bot has "} won`;
 
-        removeListeners();
+        setAfterGameState();
     }
 }
 
@@ -89,19 +90,32 @@ function playRound(event) {
     updateScore(playerScore, botScore);
 }
 
+function startOver(event) {
+    initialize();
+    const target = event.target;
+    target.style['display'] = 'none';
+    infoPara.textContent = '';
+} 
+
 function initialize() {
     playerScore = 0;
     botScore = 0;
 
-    rockIcon.addEventListener("click", playRound)
-    paperIcon.addEventListener("click", playRound)
-    scissorsIcon.addEventListener("click", playRound)
+    rockIcon.addEventListener("click", playRound);
+    paperIcon.addEventListener("click", playRound);
+    scissorsIcon.addEventListener("click", playRound);
+    playButton.removeEventListener("click", startOver);
+
+    updateScore();
 }
 
-function removeListeners() {
+function setAfterGameState() {
     rockIcon.removeEventListener('click', playRound);
     paperIcon.removeEventListener('click', playRound);
     scissorsIcon.removeEventListener('click', playRound);
+
+    playButton.addEventListener("click", startOver);
+    playButton.style['display'] = 'block';
 }
 
 initialize();
